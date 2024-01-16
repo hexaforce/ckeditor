@@ -20,16 +20,11 @@ module.exports = {
   // devtool: 'source-map',
   performance: { hints: false },
 
-  entry: path.resolve(__dirname, "src", "classic-editor-with-track-changes.js"),
+  entry: path.resolve(__dirname, "src", "index.js"),
 
   output: {
-    // The name under which the editor will be exported.
-    library: "ClassicEditor",
-
     path: path.resolve(__dirname, "build"),
-    filename: "classic-editor-with-track-changes.js",
-    libraryTarget: "umd",
-    libraryExport: "default",
+    filename: "index.js",
   },
 
   optimization: {
@@ -68,6 +63,22 @@ module.exports = {
       {
         test: /\.svg$/,
         use: ["raw-loader"],
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules[/\\]/,
+        use: [
+          {
+            loader: require.resolve("babel-loader"),
+            options: {
+              cacheDirectory: true,
+              presets: [require.resolve("@babel/preset-react")],
+              plugins: [
+                require.resolve("@babel/plugin-proposal-class-properties"),
+              ],
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,

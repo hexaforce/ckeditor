@@ -9,7 +9,7 @@
 	--ck-sample-color-green: #279863;
 	--ck-sample-container-width: 1285px;
 	--ck-sample-sidebar-width: 290px;
-	--ck-sample-editor-min-height: 400px;
+	--ck-sample-editor-min-height: 200px;
 }
 
 body, html {
@@ -34,12 +34,15 @@ a {
 	color: #38A5EE;
 }
 
+.ck-heading-dropdown {
+	width: 105px !important;
+}
+
 /* --------- STYLES TO DISPLAY THE EDITOR BEFORE LOAD ---------------------------------------------------------------------------- */
 
-#editor {
+.row-editor > div:first-child{
 	background: #fff;
-	border: 1px solid hsl(0, 0%, 70%);
-	width: 100%;
+	border: 1px solid hsl(0, 0%, 70%)
 }
 
 /* We need to use an extra `<main>` because of bigger `ck-reset` specificity. */
@@ -48,14 +51,17 @@ main .ck.ck-editor {
 	position: relative;
 	z-index: 10;
 	width: 100%;
+	min-width: 300px;
 }
 
-#editor,
-main .ck-editor[role='application'] .ck.ck-content {
-	font-size: 1em;
-	line-height: 1.6em;
-	min-height: 200px;
-	padding: 1.5em 2em;
+.row-editor .image.image-style-side {
+	float: right;
+	width: 50%;
+}
+
+.row-editor .image img {
+	width: 100%;
+	max-width: 100%;
 }
 
 .centered {
@@ -73,15 +79,16 @@ main .ck-editor[role='application'] .ck.ck-content {
 }
 
 .sidebar {
+	padding: 0 10px;
 	position: relative;
 	min-width: var(--ck-sample-sidebar-width);
 	font-size: 20px;
-	padding: 0 10px;
 	background: hsl(0, 0%, 98%);
 	border: 1px solid hsl(0, 0%, 77%);
 	border-left: 0;
+	border-top: 0;
 	overflow: hidden;
-	transition: min-width .4s ease-in-out;
+	min-height: 100%;
 
 	/* #2733. Do not overlap the left border if the sidebar is longer than content. */
 	box-shadow: -1px 0 0 0 hsl(0, 0%, 77%);
@@ -95,37 +102,33 @@ main .ck-editor[role='application'] .ck.ck-content {
 	display: none;
 }
 
-.row.row-info {
-	display: flex;
+.row-presence {
 	position: relative;
+	width: 100%;
+	border: 1px solid hsl(0, 0%, 77%);
+	border-bottom: 0;
 	background: hsl(0, 0%, 98%);
-	border: 1px solid hsl(0, 0%, 77%);
-	margin: 1em auto;
-	padding: 10px;
-	align-items: center;
+	padding: var(--ck-spacing-small);
+
+	/* Make `border-bottom` as `box-shadow` to not overlap with the editor border. */
+	box-shadow: 0 1px 0 0 hsl(0, 0%, 77%);
+
+	/* Make `z-index` bigger than `.editor` to properly display tooltips. */
+	z-index: 20;
 }
 
-button.get-data,
-button.remove-license-key {
-	background: #fff;
-	font-size: 14px;
-	font-weight: bold;
-	padding: 10px 15px;
-	border: 1px solid hsl(0, 0%, 77%);
-	border-radius: var(--ck-border-radius);
-	margin-left: 1em;
-	cursor: pointer;
-	transition: 200ms ease background;
-}
-button.get-data:hover,
-button.remove-license-key:hover {
-	background: hsl( 0, 0%, 90%);
+.presence .ck.ck-presence-list__counter {
+	order: 2;
+	margin-left: var(--ck-spacing-large)
 }
 
+.row-editor > div:first-child,
+/* Classic demo. */
 main .ck-editor[role='application'] .ck.ck-content {
+	background: #fff;
 	font-size: 1em;
 	line-height: 1.6em;
-	min-height: 200px;
+	min-height: var(--ck-sample-editor-min-height);
 	padding: 1.5em 2em;
 }
 
