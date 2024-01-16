@@ -45,8 +45,11 @@ import {
   PresenceList,
 } from "@ckeditor/ckeditor5-real-time-collaboration";
 
-import * as CKBox from "ckbox";
-import "ckbox/dist/styles/ckbox.css";
+import format from 'date-fns/format';
+import ja from 'date-fns/locale/ja'
+
+// import * as CKBox from "ckbox";
+// import "ckbox/dist/styles/ckbox.css";
 
 import { initialData } from "./sample-data";
 
@@ -56,7 +59,7 @@ const Sample = (props) => {
   const presenceListElementRef = useRef(null);
 
   useEffect(() => {
-    window.CKBox = CKBox;
+    // window.CKBox = CKBox;
     setIsLayoutReady(true);
 
     return () => {
@@ -81,6 +84,9 @@ const Sample = (props) => {
             onChange={(event, editor) => console.log({ event, editor })}
             editor={ClassicEditor}
             config={{
+              locale: {
+                dateTimeFormat: date => format( date, 'dd/MM/yyyy', {locale: ja} )
+              },
               plugins: [
                 // Alignment,
                 // Autoformat,
@@ -150,7 +156,7 @@ const Sample = (props) => {
                 // "mediaEmbed",
               ],
               cloudServices: {
-                tokenUrl: cloudServicesConfig.tokenUrl,
+                // tokenUrl: cloudServicesConfig.tokenUrl,
                 webSocketUrl: cloudServicesConfig.webSocketUrl,
               },
               collaboration: {
@@ -190,6 +196,7 @@ const Sample = (props) => {
                 editorConfig: {
                   // extraPlugins: [Bold, Italic, Underline, List, Autoformat],
                   extraPlugins: [],
+                  dateTimeFormat: date => format( date, 'dd/MM/yyyy', {locale: ja} ),
                 },
               },
             }}
