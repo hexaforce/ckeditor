@@ -6,40 +6,7 @@
 import React, { Component } from "react";
 import "./configuration-dialog.css";
 
-const LOCAL_STORAGE_KEY = "CKEDITOR_CS_CONFIG";
-
-const users = [
-  {
-    id: "e1",
-    name: "Tom Rowling",
-    avatar: "https://randomuser.me/api/portraits/men/30.jpg",
-    role: "writer",
-  },
-  {
-    id: "e2",
-    name: "Wei Hong",
-    avatar: "https://randomuser.me/api/portraits/women/51.jpg",
-    role: "writer",
-  },
-  {
-    id: "e3",
-    name: "Rani Patel",
-    role: "writer",
-  },
-  {
-    id: "e4",
-    name: "Henrik Jensen",
-    role: "commentator",
-  },
-  {
-    id: randomString(),
-    role: "writer",
-  },
-  {
-    id: randomString(),
-    role: "reader",
-  },
-];
+import { LOCAL_STORAGE_KEY, users } from "./sample-data";
 
 export default class ConfigurationPage extends Component {
   state = {

@@ -48,69 +48,7 @@ import PresenceList from "@ckeditor/ckeditor5-real-time-collaboration/src/presen
 import * as CKBox from "ckbox";
 import "ckbox/dist/styles/ckbox.css";
 
-const initialData = `
-	<h2>Bilingual Personality Disorder</h2>
-
-	<figure class="image image-style-side">
-		<img src="https://c.cksource.com/a/1/img/docs/sample-image-bilingual-personality-disorder.jpg" srcset="https://c.cksource.com/a/1/img/docs/sample-image-bilingual-personality-disorder.jpg, https://c.cksource.com/a/1/img/docs/sample-image-bilingual-personality-disorder_2x.jpg 2x">
-		<figcaption>
-			One language, one person.
-		</figcaption>
-	</figure>
-
-	<p>
-		This may be the first time you hear about this made-up disorder but it actually isn’t so far from the truth. Even the studies
-		that were conducted almost half a century show that <strong>the language you speak has more effects on you than you realize</strong>.
-	</p>
-	<p>
-		One of the very first experiments conducted on this topic dates back to 1964.
-		<a href="https://www.researchgate.net/publication/9440038_Language_and_TAT_content_in_bilinguals">In the experiment</a>
-		designed by linguist Ervin-Tripp who is an expert in psycholinguistic and sociolinguistic studies, adults who are bilingual
-		in English in French were showed series of pictures and were asked to create 3-minute stories. In the end participants emphasized
-		drastically different dynamics for stories in English and French.
-	</p>
-	<p>
-		Another ground-breaking experiment which included bilingual Japanese women married to American men in San Francisco were asked
-		to complete sentences. The goal of the experiment was to investigate whether or not human feelings and thoughts are expressed
-		differently in <strong>different language mindsets</strong>.
-	</p>
-	<p>Here is a sample from the the experiment:</p>
-
-	<table>
-		<thead>
-			<tr>
-				<th></th>
-				<th>English</th>
-				<th>Japanese</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Real friends should</td>
-				<td>Be very frank</td>
-				<td>Help each other</td>
-			</tr>
-			<tr>
-				<td>I will probably become</td>
-				<td>A teacher</td>
-				<td>A housewife</td>
-			</tr>
-			<tr>
-				<td>When there is a conflict with family</td>
-				<td>I do what I want</td>
-				<td>It's a time of great unhappiness</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<p>
-		More recent <a href="https://books.google.pl/books?id=1LMhWGHGkRUC">studies</a> show, the language a person speaks affects
-		their cognition, behavior, emotions and hence <strong>their personality</strong>. This shouldn’t come as a surprise
-		<a href="https://en.wikipedia.org/wiki/Lateralization_of_brain_function">since wealready know</a> that different regions
-		of the brain become more active depending on the person’s activity at hand. The structure, information and especially
-		<strong>the culture</strong> of languages varies substantially and the language a person speaks is an essential element of daily life.
-	</p>
-`;
+import { initialData } from "./sample-data";
 
 export default class Sample extends Component {
   state = {
@@ -132,22 +70,7 @@ export default class Sample extends Component {
   render() {
     return (
       <div className="App">
-        {this.renderHeader()}
-
         <main>
-          <div className="message">
-            <div className="centered">
-              <h2>
-                CKEditor 5 React integration of classic editor with real-time
-                collaboration
-              </h2>
-              <p>
-                Open this sample in another browser tab to start real-time
-                collaborative editing.
-              </p>
-            </div>
-          </div>
-
           <div className="centered">
             <div className="row-presence">
               <div ref={this.presenceListElementRef} className="presence"></div>
@@ -155,54 +78,7 @@ export default class Sample extends Component {
             {this.renderEditor()}
           </div>
         </main>
-
-        {this.renderFooter()}
       </div>
-    );
-  }
-
-  renderHeader() {
-    return (
-      <header>
-        <div className="centered">
-          <h1>
-            <a
-              href="https://ckeditor.com/ckeditor-5/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img
-                src="https://c.cksource.com/a/1/logos/ckeditor5.svg"
-                alt="CKEditor 5 logo"
-              />
-              CKEditor 5
-            </a>
-          </h1>
-
-          <nav>
-            <ul>
-              <li>
-                <a
-                  href="https://ckeditor.com/collaboration/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Website
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://ckeditor.com/docs/ckeditor5/latest/features/collaboration/real-time-collaboration/real-time-collaboration.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Documentation
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </header>
     );
   }
 
@@ -355,36 +231,6 @@ export default class Sample extends Component {
         )}
         <div ref={this.sidebarElementRef} className="sidebar"></div>
       </div>
-    );
-  }
-
-  renderFooter() {
-    return (
-      <footer>
-        <div className="centered">
-          <p>
-            <a
-              href="https://ckeditor.com/ckeditor-5/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              CKEditor 5
-            </a>
-            – Rich text editor of tomorrow, available today
-          </p>
-          <p>
-            Copyright © 2003-2023,
-            <a
-              href="https://cksource.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              CKSource
-            </a>
-            Holding sp. z o.o. All rights reserved.
-          </p>
-        </div>
-      </footer>
     );
   }
 
