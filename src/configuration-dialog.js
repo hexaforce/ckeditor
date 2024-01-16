@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md.
  */
 
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./configuration-dialog.css";
 
 import { randomString, LOCAL_STORAGE_KEY, users } from "./sample-data";

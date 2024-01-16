@@ -16,6 +16,7 @@ const {
 const UglifyJsWebpackPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
+  cache: false,
   // To enable sourcemap, uncomment this line.
   // devtool: 'source-map',
   performance: { hints: false },
@@ -46,7 +47,7 @@ module.exports = {
     new CKEditorTranslationsPlugin({
       // UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
       // When changing the built-in language, remember to also change it in the editor configuration (src/ckeditor.js).
-      language: "en",
+      language: "ja",
       additionalLanguages: "all",
     }),
     new webpack.BannerPlugin({
