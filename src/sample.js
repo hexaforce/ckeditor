@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.md.
  */
 
-import React, { Component } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 
 import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
@@ -50,67 +50,33 @@ import "ckbox/dist/styles/ckbox.css";
 
 import { initialData } from "./sample-data";
 
-export default class Sample extends Component {
-  state = {
-    // You need this state to render the <CKEditor /> component after the layout is ready.
-    // <CKEditor /> needs HTMLElements of `Sidebar` and `PresenceList` plugins provided through
-    // the `config` property and you have to ensure that both are already rendered.
-    isLayoutReady: false,
-  };
+const Sample = (props) => {
+  const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const sidebarElementRef = useRef(null);
+  const presenceListElementRef = useRef(null);
 
-  sidebarElementRef = React.createRef();
-  presenceListElementRef = React.createRef();
-
-  componentDidMount() {
+  useEffect(() => {
     window.CKBox = CKBox;
-    // When the layout is ready you can switch the state and render the `<CKEditor />` component.
-    this.setState({ isLayoutReady: true });
-  }
+    setIsLayoutReady(true);
 
-  render() {
-    return (
-      <div className="App">
-        <main>
-          <div className="centered">
-            <div className="row-presence">
-              <div ref={this.presenceListElementRef} className="presence"></div>
-            </div>
-            {this.renderEditor()}
-          </div>
-        </main>
-      </div>
-    );
-  }
+    return () => {
+      window.removeEventListener("resize", refreshDisplayMode);
+      window.removeEventListener("beforeunload", checkPendingActions);
+    };
+  }, []);
 
-  renderEditor() {
-    // You should contact CKSource to get the CloudServices configuration.
-    const cloudServicesConfig = this.props.configuration;
+  const renderEditor = (props) => {
+    const cloudServicesConfig = props.configuration;
 
     return (
       <div className="row row-editor">
-        {/* Do not render the <CKEditor /> component before the layout is ready. */}
-        {this.state.isLayoutReady && (
+        {isLayoutReady && (
           <CKEditor
             onReady={(editor) => {
               console.log("Editor is ready to use!", editor);
-
-              // Switch between inline and sidebar annotations according to the window size.
-              this.boundRefreshDisplayMode = this.refreshDisplayMode.bind(
-                this,
-                editor
-              );
-              // Prevent closing the tab when any action is pending.
-              this.boundCheckPendingActions = this.checkPendingActions.bind(
-                this,
-                editor
-              );
-
-              window.addEventListener("resize", this.boundRefreshDisplayMode);
-              window.addEventListener(
-                "beforeunload",
-                this.boundCheckPendingActions
-              );
-              this.refreshDisplayMode(editor);
+              window.addEventListener("resize", refreshDisplayMode);
+              window.addEventListener("beforeunload", checkPendingActions);
+              refreshDisplayMode(editor);
             }}
             onChange={(event, editor) => console.log({ event, editor })}
             editor={ClassicEditor}
@@ -215,10 +181,10 @@ export default class Sample extends Component {
                 toolbar: ["comment"],
               },
               sidebar: {
-                container: this.sidebarElementRef.current,
+                container: sidebarElementRef.current,
               },
               presenceList: {
-                container: this.presenceListElementRef.current,
+                container: presenceListElementRef.current,
               },
               comments: {
                 editorConfig: {
@@ -229,14 +195,14 @@ export default class Sample extends Component {
             data={initialData}
           />
         )}
-        <div ref={this.sidebarElementRef} className="sidebar"></div>
+        <div ref={sidebarElementRef} className="sidebar"></div>
       </div>
     );
-  }
+  };
 
-  refreshDisplayMode(editor) {
+  const refreshDisplayMode = (editor) => {
     const annotationsUIs = editor.plugins.get("AnnotationsUIs");
-    const sidebarElement = this.sidebarElementRef.current;
+    const sidebarElement = sidebarElementRef.current;
 
     if (window.innerWidth < 1070) {
       sidebarElement.classList.remove("narrow");
@@ -250,17 +216,27 @@ export default class Sample extends Component {
       sidebarElement.classList.remove("hidden", "narrow");
       annotationsUIs.switchTo("wideSidebar");
     }
-  }
+  };
 
-  checkPendingActions(editor, domEvt) {
+  const checkPendingActions = (editor, domEvt) => {
     if (editor.plugins.get("PendingActions").hasAny) {
       domEvt.preventDefault();
       domEvt.returnValue = true;
     }
-  }
+  };
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.boundRefreshDisplayMode);
-    window.removeEventListener("beforeunload", this.boundCheckPendingActions);
-  }
-}
+  return (
+    <div className="App">
+      <main>
+        <div className="centered">
+          <div className="row-presence">
+            <div ref={presenceListElementRef} className="presence"></div>
+          </div>
+          {renderEditor(props)}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Sample;
