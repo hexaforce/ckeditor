@@ -5,17 +5,16 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-
-import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor";
-
-import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
-import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
-import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote";
-import CKBoxPlugin from "@ckeditor/ckeditor5-ckbox/src/ckbox";
-import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
+import { ClassicEditor } from "@ckeditor/ckeditor5-editor-classic";
+import { Alignment } from "@ckeditor/ckeditor5-alignment";
+import { Autoformat } from "@ckeditor/ckeditor5-autoformat";
+import { RemoveFormat } from "@ckeditor/ckeditor5-remove-format";
+import { BlockQuote } from "@ckeditor/ckeditor5-block-quote";
+import { CKBoxPlugin } from "@ckeditor/ckeditor5-ckbox";
+import { Essentials } from "@ckeditor/ckeditor5-essentials";
 import { FontFamily, FontSize } from "@ckeditor/ckeditor5-font";
-import Heading from "@ckeditor/ckeditor5-heading/src/heading";
-import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
+import { Heading } from "@ckeditor/ckeditor5-heading";
+import { Highlight } from "@ckeditor/ckeditor5-highlight";
 import {
   PictureEditing,
   Image,
@@ -31,23 +30,20 @@ import {
   Strikethrough,
   Underline,
 } from "@ckeditor/ckeditor5-basic-styles";
-import Link from "@ckeditor/ckeditor5-link/src/link";
-import List from "@ckeditor/ckeditor5-list/src/list";
-import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
-import { Paragraph } from "ckeditor5/src/paragraph";
-import PasteFromOffice from "@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice";
-import RemoveFormat from "@ckeditor/ckeditor5-remove-format/src/removeformat";
-import Table from "@ckeditor/ckeditor5-table/src/table";
-import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
-
-
-import { Comments, AnnotationsUIs } from '@ckeditor/ckeditor5-comments';
-import TrackChanges from "@ckeditor/ckeditor5-track-changes/src/trackchanges";
-import CloudServices from "@ckeditor/ckeditor5-cloud-services/src/cloudservices";
-
-import RealTimeCollaborativeTrackChanges from "@ckeditor/ckeditor5-real-time-collaboration/src/realtimecollaborativetrackchanges";
-import RealTimeCollaborativeComments from "@ckeditor/ckeditor5-real-time-collaboration/src/realtimecollaborativecomments";
-import PresenceList from "@ckeditor/ckeditor5-real-time-collaboration/src/presencelist";
+import { Link } from "@ckeditor/ckeditor5-link";
+import { List } from "@ckeditor/ckeditor5-list";
+import { MediaEmbed } from "@ckeditor/ckeditor5-media-embed";
+import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
+import { PasteFromOffice } from "@ckeditor/ckeditor5-paste-from-office";
+import { Table, TableToolbar } from "@ckeditor/ckeditor5-table";
+import { Comments, AnnotationsUIs } from "@ckeditor/ckeditor5-comments";
+import { TrackChanges } from "@ckeditor/ckeditor5-track-changes";
+import { CloudServices } from "@ckeditor/ckeditor5-cloud-services";
+import {
+  RealTimeCollaborativeTrackChanges,
+  RealTimeCollaborativeComments,
+  PresenceList,
+} from "@ckeditor/ckeditor5-real-time-collaboration";
 
 import * as CKBox from "ckbox";
 import "ckbox/dist/styles/ckbox.css";
@@ -86,40 +82,40 @@ const Sample = (props) => {
             editor={ClassicEditor}
             config={{
               plugins: [
-                Alignment,
-                Autoformat,
-                BlockQuote,
-                Bold,
-                CKBoxPlugin,
-                PictureEditing,
+                // Alignment,
+                // Autoformat,
+                // RemoveFormat,
+                // BlockQuote,
+                // CKBoxPlugin,
+                // PictureEditing,
                 CloudServices,
                 Comments,
                 Essentials,
-                FontFamily,
-                FontSize,
-                Heading,
+                // FontFamily,
+                // FontSize,
+                // Heading,
                 Highlight,
-                Image,
-                ImageCaption,
-                ImageResize,
-                ImageStyle,
-                ImageToolbar,
-                ImageUpload,
-                Italic,
-                Link,
-                List,
-                MediaEmbed,
+                // Bold,
+                // Italic,
+                // Strikethrough,
+                // Underline,
+                // Image,
+                // ImageCaption,
+                // ImageResize,
+                // ImageStyle,
+                // ImageToolbar,
+                // ImageUpload,
+                // Link,
+                // List,
+                // MediaEmbed,
                 Paragraph,
-                PasteFromOffice,
+                // PasteFromOffice,
                 PresenceList,
                 RealTimeCollaborativeComments,
                 RealTimeCollaborativeTrackChanges,
-                RemoveFormat,
-                Strikethrough,
-                Table,
-                TableToolbar,
+                // Table,
+                // TableToolbar,
                 TrackChanges,
-                Underline,
               ],
               toolbar: [
                 // "heading",
@@ -165,18 +161,18 @@ const Sample = (props) => {
               //     cloudServicesConfig.ckboxTokenUrl ||
               //     cloudServicesConfig.tokenUrl,
               // },
-              image: {
-                toolbar: [
-                  "imageStyle:inline",
-                  "imageStyle:block",
-                  "imageStyle:side",
-                  // "|",
-                  // "toggleImageCaption",
-                  // "imageTextAlternative",
-                  // "|",
-                  // "comment",
-                ],
-              },
+              // image: {
+              //   toolbar: [
+              //     "imageStyle:inline",
+              //     "imageStyle:block",
+              //     "imageStyle:side",
+              //     // "|",
+              //     // "toggleImageCaption",
+              //     // "imageTextAlternative",
+              //     // "|",
+              //     // "comment",
+              //   ],
+              // },
               // table: {
               //   contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
               //   tableToolbar: ["comment"],
@@ -192,11 +188,12 @@ const Sample = (props) => {
               },
               comments: {
                 editorConfig: {
-                  extraPlugins: [Bold, Italic, Underline, List, Autoformat],
+                  // extraPlugins: [Bold, Italic, Underline, List, Autoformat],
+                  extraPlugins: [],
                 },
               },
             }}
-            // data={initialData}
+            data={initialData}
           />
         )}
         <div ref={sidebarElementRef} className="sidebar"></div>
@@ -217,8 +214,8 @@ const Sample = (props) => {
     //   sidebarElement.classList.add("narrow");
     //   annotationsUIs.switchTo("narrowSidebar");
     // } else {
-      sidebarElement.classList.remove("hidden", "narrow");
-      annotationsUIs.switchTo("wideSidebar");
+    sidebarElement.classList.remove("hidden", "narrow");
+    annotationsUIs.switchTo("wideSidebar");
     // }
   };
 
