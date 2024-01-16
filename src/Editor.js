@@ -12,7 +12,6 @@ import { Paragraph } from "@ckeditor/ckeditor5-paragraph";
 import { Comments } from "@ckeditor/ckeditor5-comments";
 import { CloudServices } from "@ckeditor/ckeditor5-cloud-services";
 import {
-  RealTimeCollaborativeTrackChanges,
   RealTimeCollaborativeComments,
   PresenceList,
 } from "@ckeditor/ckeditor5-real-time-collaboration";
@@ -21,7 +20,7 @@ import {
 
 import { initialData } from "./sample-data";
 
-const Sample = (props) => {
+const Editor = (props) => {
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const sidebarElementRef = useRef(null);
   const presenceListElementRef = useRef(null);
@@ -58,7 +57,6 @@ const Sample = (props) => {
                 Paragraph,
                 PresenceList,
                 RealTimeCollaborativeComments,
-                RealTimeCollaborativeTrackChanges,
               ],
               toolbar: [
                 "comment",
@@ -118,4 +116,4 @@ const Sample = (props) => {
   );
 };
 
-export default Sample;
+export default Editor;
