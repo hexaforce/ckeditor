@@ -16,25 +16,13 @@ function getUserInitials(name) {
 }
 
 function handleChannelIdInUrl() {
-  let id = getChannelIdFromUrl();
+  const channelIdMatch = location.search.match(/channelId=(.+)$/);
+  let id = channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
   if (!id) {
     id = randomString();
-    updateDChannelIdInUrl(id);
+    window.history.replaceState({}, document.title, `${window.location.href.split("?")[0]}?channelId=${id}`);
   }
   return id;
-}
-
-function updateDChannelIdInUrl(id) {
-  window.history.replaceState({}, document.title, generateUrlWithChannelId(id));
-}
-
-function generateUrlWithChannelId(id) {
-  return `${window.location.href.split("?")[0]}?channelId=${id}`;
-}
-
-function getChannelIdFromUrl() {
-  const channelIdMatch = location.search.match(/channelId=(.+)$/);
-  return channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
 }
 
 function isCloudServicesTokenEndpoint(tokenUrl) {
@@ -87,13 +75,11 @@ const ConfigurationPage = (props) => {
           return `user.${key}=${data[key]}`;
         })
         .join("&");
-
     setConfig(updatedConfig);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     if (
       isCloudServicesTokenEndpoint(config.tokenUrl) &&
       !config.tokenUrl.includes("?")
@@ -101,12 +87,10 @@ const ConfigurationPage = (props) => {
       setIsWarning(true);
       return;
     }
-
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
       ...config,
       tokenUrl: getRawTokenUrl(config.tokenUrl),
     }));
-
     updateDChannelIdInUrl(channelId);
     props.onSubmit({ ...config, channelId });
   };
