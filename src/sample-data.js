@@ -38,6 +38,13 @@ const users = [
 ];
 
 const initialData = `
+	<p>
+		This may be the first time you hear about this made-up disorder but it actually isn’t so far from the truth. Even the studies
+		that were conducted almost half a century show that <strong>the language you speak has more effects on you than you realize</strong>.
+	</p>
+`;
+
+const initialData2 = `
 	<h2>Bilingual Personality Disorder</h2>
 
 	<figure class="image image-style-side">
@@ -47,10 +54,7 @@ const initialData = `
 		</figcaption>
 	</figure>
 
-	<p>
-		This may be the first time you hear about this made-up disorder but it actually isn’t so far from the truth. Even the studies
-		that were conducted almost half a century show that <strong>the language you speak has more effects on you than you realize</strong>.
-	</p>
+
 	<p>
 		One of the very first experiments conducted on this topic dates back to 1964.
 		<a href="https://www.researchgate.net/publication/9440038_Language_and_TAT_content_in_bilinguals">In the experiment</a>

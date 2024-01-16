@@ -11,33 +11,37 @@ import ClassicEditor from "@ckeditor/ckeditor5-editor-classic/src/classiceditor"
 import Alignment from "@ckeditor/ckeditor5-alignment/src/alignment";
 import Autoformat from "@ckeditor/ckeditor5-autoformat/src/autoformat";
 import BlockQuote from "@ckeditor/ckeditor5-block-quote/src/blockquote";
-import Bold from "@ckeditor/ckeditor5-basic-styles/src/bold";
 import CKBoxPlugin from "@ckeditor/ckeditor5-ckbox/src/ckbox";
-import PictureEditing from "@ckeditor/ckeditor5-image/src/pictureediting";
 import Essentials from "@ckeditor/ckeditor5-essentials/src/essentials";
-import FontFamily from "@ckeditor/ckeditor5-font/src/fontfamily";
-import FontSize from "@ckeditor/ckeditor5-font/src/fontsize";
+import { FontFamily, FontSize } from "@ckeditor/ckeditor5-font";
 import Heading from "@ckeditor/ckeditor5-heading/src/heading";
 import Highlight from "@ckeditor/ckeditor5-highlight/src/highlight";
-import Image from "@ckeditor/ckeditor5-image/src/image";
-import ImageCaption from "@ckeditor/ckeditor5-image/src/imagecaption";
-import ImageResize from "@ckeditor/ckeditor5-image/src/imageresize";
-import ImageStyle from "@ckeditor/ckeditor5-image/src/imagestyle";
-import ImageToolbar from "@ckeditor/ckeditor5-image/src/imagetoolbar";
-import ImageUpload from "@ckeditor/ckeditor5-image/src/imageupload";
-import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
+import {
+  PictureEditing,
+  Image,
+  ImageCaption,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  ImageUpload,
+} from "@ckeditor/ckeditor5-image";
+import {
+  Bold,
+  Italic,
+  Strikethrough,
+  Underline,
+} from "@ckeditor/ckeditor5-basic-styles";
 import Link from "@ckeditor/ckeditor5-link/src/link";
 import List from "@ckeditor/ckeditor5-list/src/list";
 import MediaEmbed from "@ckeditor/ckeditor5-media-embed/src/mediaembed";
 import { Paragraph } from "ckeditor5/src/paragraph";
 import PasteFromOffice from "@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice";
 import RemoveFormat from "@ckeditor/ckeditor5-remove-format/src/removeformat";
-import Strikethrough from "@ckeditor/ckeditor5-basic-styles/src/strikethrough";
 import Table from "@ckeditor/ckeditor5-table/src/table";
 import TableToolbar from "@ckeditor/ckeditor5-table/src/tabletoolbar";
-import Underline from "@ckeditor/ckeditor5-basic-styles/src/underline";
 
-import Comments from "@ckeditor/ckeditor5-comments/src/comments";
+
+import { Comments, AnnotationsUIs } from '@ckeditor/ckeditor5-comments';
 import TrackChanges from "@ckeditor/ckeditor5-track-changes/src/trackchanges";
 import CloudServices from "@ckeditor/ckeditor5-cloud-services/src/cloudservices";
 
@@ -118,36 +122,36 @@ const Sample = (props) => {
                 Underline,
               ],
               toolbar: [
-                "heading",
-                "|",
-                "fontsize",
-                "fontfamily",
-                "|",
-                "bold",
-                "italic",
-                "underline",
-                "strikethrough",
-                "removeFormat",
-                "highlight",
-                "|",
-                "alignment",
-                "|",
-                "numberedList",
-                "bulletedList",
-                "|",
-                "undo",
-                "redo",
-                "|",
+                // "heading",
+                // "|",
+                // "fontsize",
+                // "fontfamily",
+                // "|",
+                // "bold",
+                // "italic",
+                // "underline",
+                // "strikethrough",
+                // "removeFormat",
+                // "highlight",
+                // "|",
+                // "alignment",
+                // "|",
+                // "numberedList",
+                // "bulletedList",
+                // "|",
+                // "undo",
+                // "redo",
+                // "|",
                 "comment",
                 "commentsArchive",
-                "trackChanges",
-                "|",
-                "ckbox",
-                "imageUpload",
-                "link",
-                "blockquote",
-                "insertTable",
-                "mediaEmbed",
+                // "trackChanges",
+                // "|",
+                // "ckbox",
+                // "imageUpload",
+                // "link",
+                // "blockquote",
+                // "insertTable",
+                // "mediaEmbed",
               ],
               cloudServices: {
                 tokenUrl: cloudServicesConfig.tokenUrl,
@@ -156,30 +160,30 @@ const Sample = (props) => {
               collaboration: {
                 channelId: cloudServicesConfig.channelId,
               },
-              ckbox: {
-                tokenUrl:
-                  cloudServicesConfig.ckboxTokenUrl ||
-                  cloudServicesConfig.tokenUrl,
-              },
+              // ckbox: {
+              //   tokenUrl:
+              //     cloudServicesConfig.ckboxTokenUrl ||
+              //     cloudServicesConfig.tokenUrl,
+              // },
               image: {
                 toolbar: [
                   "imageStyle:inline",
                   "imageStyle:block",
                   "imageStyle:side",
-                  "|",
-                  "toggleImageCaption",
-                  "imageTextAlternative",
-                  "|",
-                  "comment",
+                  // "|",
+                  // "toggleImageCaption",
+                  // "imageTextAlternative",
+                  // "|",
+                  // "comment",
                 ],
               },
-              table: {
-                contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
-                tableToolbar: ["comment"],
-              },
-              mediaEmbed: {
-                toolbar: ["comment"],
-              },
+              // table: {
+              //   contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
+              //   tableToolbar: ["comment"],
+              // },
+              // mediaEmbed: {
+              //   toolbar: ["comment"],
+              // },
               sidebar: {
                 container: sidebarElementRef.current,
               },
@@ -192,7 +196,7 @@ const Sample = (props) => {
                 },
               },
             }}
-            data={initialData}
+            // data={initialData}
           />
         )}
         <div ref={sidebarElementRef} className="sidebar"></div>
@@ -204,18 +208,18 @@ const Sample = (props) => {
     const annotationsUIs = editor.plugins.get("AnnotationsUIs");
     const sidebarElement = sidebarElementRef.current;
 
-    if (window.innerWidth < 1070) {
-      sidebarElement.classList.remove("narrow");
-      sidebarElement.classList.add("hidden");
-      annotationsUIs.switchTo("inline");
-    } else if (window.innerWidth < 1300) {
-      sidebarElement.classList.remove("hidden");
-      sidebarElement.classList.add("narrow");
-      annotationsUIs.switchTo("narrowSidebar");
-    } else {
+    // if (window.innerWidth < 1070) {
+    //   sidebarElement.classList.remove("narrow");
+    //   sidebarElement.classList.add("hidden");
+    //   annotationsUIs.switchTo("inline");
+    // } else if (window.innerWidth < 1300) {
+    //   sidebarElement.classList.remove("hidden");
+    //   sidebarElement.classList.add("narrow");
+    //   annotationsUIs.switchTo("narrowSidebar");
+    // } else {
       sidebarElement.classList.remove("hidden", "narrow");
       annotationsUIs.switchTo("wideSidebar");
-    }
+    // }
   };
 
   const checkPendingActions = (editor, domEvt) => {
