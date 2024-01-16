@@ -5,6 +5,7 @@
 
 import React, { useState } from "react";
 import "./configuration-dialog.css";
+
 import { randomString, LOCAL_STORAGE_KEY, users } from "./sample-data";
 
 function getUserInitials(name) {
@@ -16,13 +17,27 @@ function getUserInitials(name) {
 }
 
 function handleChannelIdInUrl() {
-  const channelIdMatch = location.search.match(/channelId=(.+)$/);
-  let id = channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
+  let id = getChannelIdFromUrl();
+
   if (!id) {
     id = randomString();
-    window.history.replaceState({}, document.title, `${window.location.href.split("?")[0]}?channelId=${id}`);
+    updateDChannelIdInUrl(id);
   }
+
   return id;
+}
+
+function updateDChannelIdInUrl(id) {
+  window.history.replaceState({}, document.title, generateUrlWithChannelId(id));
+}
+
+function generateUrlWithChannelId(id) {
+  return `${window.location.href.split("?")[0]}?channelId=${id}`;
+}
+
+function getChannelIdFromUrl() {
+  const channelIdMatch = location.search.match(/channelId=(.+)$/);
+  return channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
 }
 
 function isCloudServicesTokenEndpoint(tokenUrl) {
@@ -33,11 +48,17 @@ function getRawTokenUrl(url) {
   if (isCloudServicesTokenEndpoint(url)) {
     return url.split("?")[0];
   }
+
   return url;
+}
+
+function storeConfig(csConfig) {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(csConfig));
 }
 
 function getStoredConfig() {
   const config = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "{}");
+
   return {
     tokenUrl: config.tokenUrl || "",
     webSocketUrl: config.webSocketUrl || "",
@@ -72,14 +93,17 @@ const ConfigurationPage = (props) => {
           if (key === "role") {
             return `${key}=${data[key]}`;
           }
+
           return `user.${key}=${data[key]}`;
         })
         .join("&");
+
     setConfig(updatedConfig);
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
     if (
       isCloudServicesTokenEndpoint(config.tokenUrl) &&
       !config.tokenUrl.includes("?")
@@ -87,10 +111,12 @@ const ConfigurationPage = (props) => {
       setIsWarning(true);
       return;
     }
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
+
+    storeConfig({
       ...config,
       tokenUrl: getRawTokenUrl(config.tokenUrl),
-    }));
+    });
+
     updateDChannelIdInUrl(channelId);
     props.onSubmit({ ...config, channelId });
   };
