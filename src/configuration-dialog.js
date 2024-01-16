@@ -5,30 +5,7 @@
 
 import React, { useState } from "react";
 import "./configuration-dialog.css";
-
 import { randomString, LOCAL_STORAGE_KEY, users } from "./sample-data";
-
-function getUserInitials(name) {
-  return name
-    .split(" ", 2)
-    .map((part) => part.charAt(0))
-    .join("")
-    .toUpperCase();
-}
-
-function handleChannelIdInUrl() {
-  const channelIdMatch = location.search.match(/channelId=(.+)$/);
-  let id = channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
-  if (!id) {
-    id = randomString();
-    window.history.replaceState(
-      {},
-      document.title,
-      `${window.location.href.split("?")[0]}?channelId=${id}`
-    );
-  }
-  return id;
-}
 
 function isCloudServicesTokenEndpoint(tokenUrl) {
   return /cke-cs[\w-]*\.com\/token\/dev/.test(tokenUrl);
@@ -42,6 +19,7 @@ function getRawTokenUrl(url) {
 }
 
 const ConfigurationPage = (props) => {
+  // ---------------------
   const cloudServicesConfig = JSON.parse(
     localStorage.getItem(LOCAL_STORAGE_KEY) || "{}"
   );
@@ -50,20 +28,38 @@ const ConfigurationPage = (props) => {
     webSocketUrl: cloudServicesConfig.webSocketUrl || "",
   });
 
-  const [channelId, setChannelId] = useState(handleChannelIdInUrl());
+  // ---------------------
+  const channelIdMatch = location.search.match(/channelId=(.+)$/);
+  let id = channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
+  if (!id) {
+    id = randomString();
+    window.history.replaceState(
+      {},
+      document.title,
+      `${window.location.href.split("?")[0]}?channelId=${id}`
+    );
+  }
+  const [channelId, setChannelId] = useState(id);
+
+  // ---------------------
   const [selectedUser, setSelectedUser] = useState(null);
+
+  // ---------------------
   const [isWarning, setIsWarning] = useState(false);
 
+  // ---------------------
   const handleConfigChange = (value, property) => {
     setConfig((prevConfig) => ({ ...prevConfig, [property]: value }));
   };
 
+  // ---------------------
   const handleTokenUrlChange = (value) => {
     handleConfigChange(value, "tokenUrl");
     setSelectedUser(null);
     setIsWarning(false);
   };
 
+  // ---------------------
   const selectUser = (data) => {
     setSelectedUser(data.id);
     setIsWarning(false);
@@ -82,6 +78,7 @@ const ConfigurationPage = (props) => {
     setConfig(updatedConfig);
   };
 
+  // ---------------------
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
@@ -159,7 +156,11 @@ const ConfigurationPage = (props) => {
                 {data.avatar && <img src={data.avatar} />}
                 {!data.avatar && data.name && (
                   <span className="pseudo-avatar">
-                    {getUserInitials(data.name)}
+                    {data.name
+                      .split(" ", 2)
+                      .map((part) => part.charAt(0))
+                      .join("")
+                      .toUpperCase()}
                   </span>
                 )}
                 {!data.avatar && !data.name && (
