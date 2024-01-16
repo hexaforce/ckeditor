@@ -17,11 +17,15 @@ function getUserInitials(name) {
 }
 
 function handleChannelIdInUrl() {
-  let id = getChannelIdFromUrl();
-
+  const channelIdMatch = location.search.match(/channelId=(.+)$/);
+  let id = channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
   if (!id) {
     id = randomString();
-    updateDChannelIdInUrl(id);
+    window.history.replaceState(
+      {},
+      document.title,
+      `${window.location.href.split("?")[0]}?channelId=${id}`
+    );
   }
 
   return id;
@@ -48,7 +52,6 @@ function getRawTokenUrl(url) {
   if (isCloudServicesTokenEndpoint(url)) {
     return url.split("?")[0];
   }
-
   return url;
 }
 
@@ -86,7 +89,8 @@ const ConfigurationPage = (props) => {
     setIsWarning(false);
 
     const updatedConfig = { ...config };
-    updatedConfig.tokenUrl = `${getRawTokenUrl(config.tokenUrl)}?` +
+    updatedConfig.tokenUrl =
+      `${getRawTokenUrl(config.tokenUrl)}?` +
       Object.keys(data)
         .filter((key) => data[key])
         .map((key) => {
@@ -112,12 +116,18 @@ const ConfigurationPage = (props) => {
       return;
     }
 
-    storeConfig({
-      ...config,
-      tokenUrl: getRawTokenUrl(config.tokenUrl),
-    });
-
-    updateDChannelIdInUrl(channelId);
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify({
+        ...config,
+        tokenUrl: getRawTokenUrl(config.tokenUrl),
+      })
+    );
+    window.history.replaceState(
+      {},
+      document.title,
+      `${window.location.href.split("?")[0]}?channelId=${channelId}`
+    );
     props.onSubmit({ ...config, channelId });
   };
 
@@ -140,7 +150,9 @@ const ConfigurationPage = (props) => {
           <label htmlFor="web-socket-url">WebSocket URL</label>
           <input
             name="web-socket-url"
-            onChange={(evt) => handleConfigChange(evt.target.value, "webSocketUrl")}
+            onChange={(evt) =>
+              handleConfigChange(evt.target.value, "webSocketUrl")
+            }
             value={config.webSocketUrl}
           />
         </div>
