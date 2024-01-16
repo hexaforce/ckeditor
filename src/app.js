@@ -5,13 +5,10 @@
 
 import React, { useState } from "react";
 import ConfigurationDialog from "./configuration-dialog";
-import Sample from "./sample";
+import Sample from "./Editor";
 
 const App = () => {
   const [configuration, setConfiguration] = useState(null);
-
-  // Configuration data needed to initialize the editor is available only after the configuration dialog
-  // is submitted, hence the editor is initialized after ConfigurationDialog returns the configuration.
   if (!configuration) {
     return (
       <ConfigurationDialog
@@ -19,7 +16,6 @@ const App = () => {
       />
     );
   }
-
   return <Sample configuration={configuration} />;
 };
 
