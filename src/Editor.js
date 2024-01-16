@@ -63,6 +63,7 @@ const Editor = (props) => {
                 "commentsArchive",
               ],
               cloudServices: {
+                tokenUrl: cloudServicesConfig.tokenUrl,
                 webSocketUrl: cloudServicesConfig.webSocketUrl,
               },
               collaboration: {

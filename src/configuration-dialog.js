@@ -5,7 +5,6 @@
 
 import React, { useState } from "react";
 import "./configuration-dialog.css";
-
 import { randomString, LOCAL_STORAGE_KEY, users } from "./sample-data";
 
 function getUserInitials(name) {
@@ -18,12 +17,10 @@ function getUserInitials(name) {
 
 function handleChannelIdInUrl() {
   let id = getChannelIdFromUrl();
-
   if (!id) {
     id = randomString();
     updateDChannelIdInUrl(id);
   }
-
   return id;
 }
 
@@ -37,7 +34,6 @@ function generateUrlWithChannelId(id) {
 
 function getChannelIdFromUrl() {
   const channelIdMatch = location.search.match(/channelId=(.+)$/);
-
   return channelIdMatch ? decodeURIComponent(channelIdMatch[1]) : null;
 }
 
@@ -49,20 +45,13 @@ function getRawTokenUrl(url) {
   if (isCloudServicesTokenEndpoint(url)) {
     return url.split("?")[0];
   }
-
   return url;
-}
-
-function storeConfig(csConfig) {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(csConfig));
 }
 
 function getStoredConfig() {
   const config = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "{}");
-
   return {
     tokenUrl: config.tokenUrl || "",
-    ckboxTokenUrl: config.ckboxTokenUrl || "",
     webSocketUrl: config.webSocketUrl || "",
   };
 }
@@ -95,7 +84,6 @@ const ConfigurationPage = (props) => {
           if (key === "role") {
             return `${key}=${data[key]}`;
           }
-
           return `user.${key}=${data[key]}`;
         })
         .join("&");
@@ -114,10 +102,10 @@ const ConfigurationPage = (props) => {
       return;
     }
 
-    storeConfig({
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
       ...config,
       tokenUrl: getRawTokenUrl(config.tokenUrl),
-    });
+    }));
 
     updateDChannelIdInUrl(channelId);
     props.onSubmit({ ...config, channelId });
@@ -183,16 +171,6 @@ const ConfigurationPage = (props) => {
               </div>
             ))}
           </div>
-        </div>
-        <div>
-          <label htmlFor="ckbox-token-url">CKBox token URL (optional)</label>
-          <input
-            name="ckbox-token-url"
-            onChange={(evt) =>
-              handleConfigChange(evt.target.value, "ckboxTokenUrl")
-            }
-            value={config.ckboxTokenUrl}
-          />
         </div>
         <div>
           <label htmlFor="channel-id">Channel ID</label>
